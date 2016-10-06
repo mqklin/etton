@@ -14,7 +14,7 @@ class App extends Component {
     const { game } = this.state;
     return (
       <div className={styles.root}>
-        {!game
+        {game
           ? <NoGame onGameStart={({ N }) => this.setState({ game: { N } })}/>
           : <ActiveGame game={game}/>
         }

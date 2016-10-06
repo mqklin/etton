@@ -1,0 +1,10 @@
+.root {
+  &.top{
+    &-1 {
+      margin-top: 10px;
+    }
+    &-2 {
+      margin-top: 20px;
+    }
+  }
+}
