@@ -2,11 +2,13 @@ import React, { Component } from 'react';
 import styles from './styles.scss';
 import Field from './Field';
 import Indent from 'components/Indent';
+import { Button } from 'components';
 
 class ActiveGame extends Component {
   render() {
     return (
-      <div className={styles.root}>
+      <div className={styles.art
+        }>
         <div className={styles.header}>
           Ход игрока №1
         </div>
@@ -22,7 +24,16 @@ class ActiveGame extends Component {
         </Indent>
         <Indent top={1}>
           <div className={styles.close}>
-            Закрыть
+            <Button
+              text="Закрыть"
+              type={{
+                value: 'link',
+                options: {
+                  colorScheme: 'default',
+                },
+              }}
+              onClick={this.props.onGameClose}
+            />
           </div>
         </Indent>
       </div>

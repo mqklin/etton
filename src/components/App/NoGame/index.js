@@ -23,6 +23,10 @@ class NoGame extends Component {
 
   handleStartButtonClick = () => {
     const { NValue, NErrorText } = this.state;
+    if (!NValue) {
+      this.setState({ NErrorText: 'Обязательное поле' });
+      return;
+    }
     if (NErrorText) return;
     this.props.onGameStart({ N: NValue });
   };
