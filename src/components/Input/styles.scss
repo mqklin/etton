@@ -1,0 +1,29 @@
+.root {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  .input {
+    box-sizing: border-box;
+    width: 100%;
+    background: white;
+    padding: 5px 0;
+    border: 1px solid #ccc;
+    &.error {
+      outline: rgba(255, 0, 0, 0.8) auto 5px;
+      border-color: rgba(255, 0, 0, 0.8);
+    }
+    &.textAlignCenter {
+      text-align: center;
+    }
+  }
+
+  .errorText {
+    position: absolute;
+    color: red;
+    top: 50%;
+    transform: translateY(-50%);
+    white-space: nowrap;
+    font-size: 15px;
+    margin-left: 5px;
+  }
+}

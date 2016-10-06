@@ -1,0 +1,20 @@
+.root {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  .enterN {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    .text {
+
+    }
+    .input {
+      margin-left: 5px;
+      width: 50px;
+    }
+  }
+  .startButton {
+    margin-top: 10px;
+  }
+}
