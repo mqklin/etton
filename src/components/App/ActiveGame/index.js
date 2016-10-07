@@ -1,14 +1,19 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import styles from './styles.scss';
 import Field from './Field';
-import Indent from 'components/Indent';
-import { Button } from 'components';
+import { Indent, Button } from 'components';
 
 class ActiveGame extends Component {
+  static propTypes = {
+    game: PropTypes.shape({
+      N: PropTypes.number.isRequried,
+    }).isRequried,
+    onGameClose: PropTypes.func.isRequried,
+  };
+  static defaultProps = {};
   render() {
     return (
-      <div className={styles.art
-        }>
+      <div className={styles.root}>
         <div className={styles.header}>
           Ход игрока №1
         </div>

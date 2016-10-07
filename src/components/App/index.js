@@ -5,11 +5,14 @@ import NoGame from './NoGame';
 import ActiveGame from './ActiveGame';
 
 class App extends Component {
+  static propTypes = {};
+  static defaultProps = {};
+
   componentWillMount() {
     this.setState({
       game: null,
     });
-  }d
+  }
   render() {
     const { game } = this.state;
     return (

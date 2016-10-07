@@ -1,8 +1,13 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import styles from './styles.scss';
 import { Input, Button } from 'components';
 
 class NoGame extends Component {
+  static propTypes = {
+    onGameStart: PropTypes.func.isRequired,
+  };
+  static defaultProps = {};
+
   state = {
     NErrorText: '',
     NValue: '',
