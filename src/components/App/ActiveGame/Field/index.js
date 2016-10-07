@@ -16,14 +16,21 @@ class Field extends Component {
   constructor(props: Props) {
     super(props);
     this.state = {
-      field: Array(props.N).fill(''),
+      field: Array(props.N).fill('\u00A0'),
     };
   }
   render() {
     const { field } = this.state;
     return (
-      <div>
-        Field
+      <div className={styles.root}>
+        {field.map((v, idx) => (
+          <span
+            key={idx}
+            className={styles.cell}
+          >
+            {v}
+          </span>
+        ))}
       </div>
     );
   }

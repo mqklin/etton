@@ -4,10 +4,14 @@ import { Input } from 'components';
 import NoGame from './NoGame';
 import ActiveGame from './ActiveGame';
 
-class App extends Component {
-  static propTypes = {};
-  static defaultProps = {};
+type State = {
+  game: {
+    N: number,
+  },
+};
 
+class App extends Component {
+  state: State;
   state = {
     game: {
       N: 0,
@@ -20,7 +24,7 @@ class App extends Component {
       <div className={styles.root}>
         {game.N === 0
           ? <NoGame
-              onGameStart={({ N }) => this.setState({ game: { N } })}
+              onGameStart={(N: number) => this.setState({ game: { N } })}
             />
           : <ActiveGame
               game={game}

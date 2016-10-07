@@ -11,7 +11,8 @@ type Props = {
 };
 
 class ActiveGame extends Component {
-  static defaultProps = {};
+  props: Props;
+
   render() {
     const { game } = this.props;
     return (
@@ -26,7 +27,7 @@ class ActiveGame extends Component {
             />
           </div>
         </Indent>
-        <Indent top={1}>
+        {/* <Indent top={1}>
           <div className={styles.result}>
             Победил игрок №
           </div>
@@ -44,7 +45,7 @@ class ActiveGame extends Component {
               onClick={this.props.onGameClose}
             />
           </div>
-        </Indent>
+        </Indent> */}
       </div>
     );
   }

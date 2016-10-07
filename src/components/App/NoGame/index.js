@@ -2,12 +2,18 @@ import React, { Component, PropTypes } from 'react';
 import styles from './styles.scss';
 import { Input, Button } from 'components';
 
-class NoGame extends Component {
-  static propTypes = {
-    onGameStart: PropTypes.func.isRequired,
-  };
-  static defaultProps = {};
+type State = {
+  NErrorText: string,
+  NValue: string,
+};
 
+type Props = {
+  onGameStart: (N: number) => void,
+};
+
+class NoGame extends Component {
+  props: Props;
+  state: State;
   state = {
     NErrorText: '',
     NValue: '',
@@ -27,17 +33,15 @@ class NoGame extends Component {
   };
 
   handleStartButtonClick = () => {
-    const { NValue, NErrorText } = this.state;
-    if (!NValue) {
+    if (!this.state.NValue) {
       this.setState({ NErrorText: 'Обязательное поле' });
       return;
     }
-    if (NErrorText) return;
-    this.props.onGameStart({ N: NValue });
+    if (this.state.NErrorText) return;
+    this.props.onGameStart(+this.state.NValue);
   };
 
   render() {
-    const { NErrorText, NValue } = this.state;
     return (
       <div className={styles.root}>
         <div className={styles.enterN}>
@@ -47,9 +51,9 @@ class NoGame extends Component {
           <div className={styles.input}>
             <Input
               textAlignCenter
-              value={NValue}
+              value={this.state.NValue}
               onChange={this.handleNChange}
-              errorText={NErrorText}
+              errorText={this.state.NErrorText}
             />
           </div>
         </div>

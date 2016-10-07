@@ -8,7 +8,7 @@ type State = {
 };
 
 type Props = {
-  onChange: () => void,
+  onChange: (value: string) => void,
   errorText: string,
   value: string,
   type: string,
@@ -17,13 +17,12 @@ type Props = {
 
 class Input extends Component {
   static defaultProps = {
-    onChange: (value: string) => {},
     errorText: '',
-    value: '',
     type: 'text',
     textAlignCenter: false,
   };
 
+  props: Props;
   state: State;
 
   constructor(props: Props) {
@@ -49,7 +48,7 @@ class Input extends Component {
         <input style={{ display: 'none' }} />
         <input
           type={type}
-          className={classNames(styles.input, errorText && styles.error, textAlignCenter && styles.textAlignCenter)}
+          className={classNames(styles.input, errorText && styles.error, textAlignCenter ? styles.textAlignCenter : '')}
           value={value}
           onChange={({ target: { value } }) => this.props.onChange(value)}
         />
