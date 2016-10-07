@@ -2,24 +2,31 @@ import React, { Component, PropTypes } from 'react';
 import styles from './styles.scss';
 import classNames from 'classnames';
 
-class Input extends Component {
-  static propTypes = {
-    onChange: PropTypes.func,
-    errorText: PropTypes.string,
-    value: PropTypes.string,
-    type: PropTypes.string,
-    textAlignCenter: PropTypes.bool,
-  };
+type State = {
+  value: string,
+  errorText: string,
+};
 
+type Props = {
+  onChange: () => void,
+  errorText: string,
+  value: string,
+  type: string,
+  textAlignCenter: boolean,
+};
+
+class Input extends Component {
   static defaultProps = {
-    onChange: () => {},
+    onChange: (value: string) => {},
     errorText: '',
     value: '',
     type: 'text',
     textAlignCenter: false,
   };
 
-  constructor(props) {
+  state: State;
+
+  constructor(props: Props) {
     super(props);
     this.state = {
       value: props.value,
@@ -27,7 +34,7 @@ class Input extends Component {
     };
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps(nextProps: Props) {
     this.setState({
       value: nextProps.value,
       errorText: nextProps.errorText,

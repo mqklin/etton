@@ -1,4 +1,11 @@
-export App from './App';
-export Input from './Input';
-export Button from './Button';
-export Indent from './Indent';
+import App from './App';
+import Input from './Input';
+import Button from './Button';
+import Indent from './Indent';
+
+export {
+  App,
+  Input,
+  Button,
+  Indent,
+};

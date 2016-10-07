@@ -8,22 +8,23 @@ class App extends Component {
   static propTypes = {};
   static defaultProps = {};
 
-  componentWillMount() {
-    this.setState({
-      game: null,
-    });
-  }
+  state = {
+    game: {
+      N: 0,
+    },
+  };
+
   render() {
     const { game } = this.state;
     return (
       <div className={styles.root}>
-        {!game
+        {game.N === 0
           ? <NoGame
               onGameStart={({ N }) => this.setState({ game: { N } })}
             />
           : <ActiveGame
               game={game}
-              onGameClose={() => this.setState({ game: null })}
+              onGameClose={() => this.setState({ game: { N: 0 } })}
             />
         }
       </div>

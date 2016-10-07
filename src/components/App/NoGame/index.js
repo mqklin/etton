@@ -13,7 +13,7 @@ class NoGame extends Component {
     NValue: '',
   };
 
-  handleNChange = (value) => {
+  handleNChange = (value: string) => {
     const nextState = {};
     if ((value === '0') || (value.split('').some(c => c.charCodeAt(0) < 48 || c.charCodeAt(0) > 57)) || (+value < 5) || (+value > 9)) {
       nextState.NErrorText = 'Только число от 5 до 9';

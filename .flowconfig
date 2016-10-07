@@ -1,0 +1,15 @@
+[ignore]
+<PROJECT_ROOT>/node_modules/.*
+<PROJECT_ROOT>/webpack-config/.*
+<PROJECT_ROOT>/dev-server.js
+
+
+[include]
+
+[libs]
+
+[options]
+module.name_mapper.extension='scss' -> '<PROJECT_ROOT>/flow-stubs/css-module.js'
+module.name_mapper.extension='css' -> '<PROJECT_ROOT>/flow-stubs/css-module.js'
+module.system.node.resolve_dirname=src
+module.system.node.resolve_dirname=node_modules
