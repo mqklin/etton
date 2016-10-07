@@ -1,18 +1,30 @@
 .root {
-  display: flex;
-  flex-flow: row wrap;
-  .cell {
-    display: inline-block;
-    width: 50px;
-    height: 50px;
-    box-sizing: border-box;
-    border-right: 1px solid black;
-    border-bottom: 1px solid black;
-    &.firstColumn {
-      border-left: 1px solid black;
-    }
-    &.firstRow {
-      border-top: 1px solid black;
+  .header {
+    text-align: center;
+  }
+  .field {
+    display: flex;
+    flex-flow: row wrap;
+    .cell {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 50px;
+      height: 50px;
+      font-size: 30px;
+      box-sizing: border-box;
+      border-right: 1px solid black;
+      border-bottom: 1px solid black;
+      cursor: pointer;
+      &.dirty {
+        cursor: default;
+      }
+      &.firstColumn {
+        border-left: 1px solid black;
+      }
+      &.firstRow {
+        border-top: 1px solid black;
+      }
     }
   }
 }
