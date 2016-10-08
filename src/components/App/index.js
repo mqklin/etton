@@ -2,30 +2,52 @@ import React, { Component } from 'react';
 import styles from './styles.scss';
 import { ActiveGame, NoGame } from 'components';
 
+type Props = {};
 type State = {
-  game: {
+  game: ?{
     N: number,
+    activePlayer: 'x' | 'o',
+    field: ['' | 'x' | 'o'],
+    winChain: ?[number],
   },
 };
 
 class App extends Component {
-  state: State = {
-    game: {
-      N: 0,
-    },
+  props: Props;
+  state: State;
+
+  constructor(props: Props) {
+    super(props);
+    const game = localStorage.getItem('game');
+    this.state = {
+      game: game ? JSON.parse(game) : null,
+    };
+  }
+
+  startGame = (N: number) => {
+    const newState = {
+      game: {
+        N,
+        activePlayer: 'x',
+        field: Array(N * N).fill(''),
+        winChain: null,
+      },
+    };
+    localStorage.setItem('game', JSON.stringify(newState.game));
+    this.setState(newState);
   };
 
   render() {
     const { state } = this;
     return (
       <div className={styles.root}>
-        {state.game.N === 0
+        {state.game === null
           ? <NoGame
-              onGameStart={(N: number) => this.setState({ game: { N } })}
+              onGameStart={this.startGame}
             />
           : <ActiveGame
               game={state.game}
-              onGameClose={() => this.setState({ game: { N: 0 } })}
+              onGameClose={() => this.setState({ game: null })}
             />
         }
       </div>
