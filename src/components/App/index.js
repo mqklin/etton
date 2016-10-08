@@ -11,23 +11,22 @@ type State = {
 };
 
 class App extends Component {
-  state: State;
-  state = {
+  state: State = {
     game: {
       N: 0,
     },
   };
 
   render() {
-    const { game } = this.state;
+    const { state } = this;
     return (
       <div className={styles.root}>
-        {game.N === 0
+        {state.game.N === 0
           ? <NoGame
               onGameStart={(N: number) => this.setState({ game: { N } })}
             />
           : <ActiveGame
-              game={game}
+              game={state.game}
               onGameClose={() => this.setState({ game: { N: 0 } })}
             />
         }

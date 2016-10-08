@@ -8,20 +8,13 @@ type State = {
 };
 
 type Props = {
-  onChange: (value: string) => void,
   errorText: string,
-  value: string,
-  type: string,
   textAlignCenter: boolean,
+  onChange: (value: string) => void,
+  value: string,
 };
 
 class Input extends Component {
-  static defaultProps = {
-    errorText: '',
-    type: 'text',
-    textAlignCenter: false,
-  };
-
   props: Props;
   state: State;
 
@@ -41,18 +34,20 @@ class Input extends Component {
   }
 
   render() {
-    const { value, errorText } = this.state;
-    const { type, textAlignCenter } = this.props;
+    const { props, state } = this;
     return (
       <div className={styles.root}>
         <input style={{ display: 'none' }} />
         <input
-          type={type}
-          className={classNames(styles.input, errorText && styles.error, textAlignCenter ? styles.textAlignCenter : '')}
-          value={value}
-          onChange={({ target: { value } }) => this.props.onChange(value)}
+          className={classNames(
+            styles.input,
+            state.errorText ? styles.error : '',
+            props.textAlignCenter ? styles.textAlignCenter : '',
+          )}
+          value={state.value}
+          onChange={({ target: { value } }) => props.onChange(value)}
         />
-        {errorText && <span className={styles.errorText}>{errorText}</span>}
+        {state.errorText && <span className={styles.errorText}>{state.errorText}</span>}
       </div>
     );
   }

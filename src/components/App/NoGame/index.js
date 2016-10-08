@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import styles from './styles.scss';
 import { Input, Button } from 'components';
 
@@ -13,8 +13,7 @@ type Props = {
 
 class NoGame extends Component {
   props: Props;
-  state: State;
-  state = {
+  state: State = {
     NErrorText: '',
     NValue: '',
   };
@@ -33,15 +32,17 @@ class NoGame extends Component {
   };
 
   handleStartButtonClick = () => {
-    if (!this.state.NValue) {
+    const { props, state } = this;
+    if (!state.NValue) {
       this.setState({ NErrorText: 'Обязательное поле' });
       return;
     }
-    if (this.state.NErrorText) return;
-    this.props.onGameStart(+this.state.NValue);
+    if (state.NErrorText) return;
+    props.onGameStart(+state.NValue);
   };
 
   render() {
+    const { state } = this;
     return (
       <div className={styles.root}>
         <div className={styles.enterN}>
@@ -51,15 +52,16 @@ class NoGame extends Component {
           <div className={styles.input}>
             <Input
               textAlignCenter
-              value={this.state.NValue}
+              value={state.NValue}
               onChange={this.handleNChange}
-              errorText={this.state.NErrorText}
+              errorText={state.NErrorText}
             />
           </div>
         </div>
         <div className={styles.startButton}>
           <Button
             text="Играть!"
+            options={{ type: 'button', colorScheme: 'default' }}
             onClick={this.handleStartButtonClick}
           />
         </div>

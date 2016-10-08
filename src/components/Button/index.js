@@ -1,43 +1,30 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import styles from './styles.scss';
 import classNames from 'classnames';
 
+type Props = {
+  text: string,
+  onClick: () => void,
+  options: {
+    type: 'button' | 'link',
+    colorScheme: 'default' /*| 'warning' | 'success'*/,
+  },
+};
+
 class Button extends Component {
-  static propTypes = {
-    text: PropTypes.string.isRequired,
-    onClick: PropTypes.func.isRequired,
-    disabled: PropTypes.bool,
-    type: PropTypes.shape({
-      value: PropTypes.oneOf(['button', 'link']).isRequired,
-      options: PropTypes.shape({
-        colorScheme: PropTypes.oneOf(['default']).isRequired,
-      }).isRequired,
-    }).isRequired,
-  };
-  static defaultProps = {
-    type: {
-      value: 'button',
-      options: {
-        colorScheme: 'default',
-      },
-    },
-  };
-  handleClick = () => {
-    const { type, onClick } = this.props;
-    onClick();
-  };
+  props: Props;
   render() {
-    const { text, type } = this.props;
+    const { props } = this;
     return (
       <div className={styles.root}>
         <button
           className={classNames(
-            styles[type.value],
-            styles[`colorScheme-${type.options.colorScheme}`],
+            styles[props.options.type],
+            styles[`colorScheme-${props.options.colorScheme}`],
           )}
-          onClick={this.handleClick}
+          onClick={props.onClick}
         >
-          {text}
+          {props.text}
         </button>
       </div>
     );

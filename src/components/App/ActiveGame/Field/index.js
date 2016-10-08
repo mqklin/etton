@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import styles from './styles.scss';
 import classNames from 'classnames';
 import update from 'react-addons-update';
@@ -25,35 +25,34 @@ class Field extends Component {
   }
 
   handleCellClick = (idx: number): void => {
-    const { field, activePlayer } = this.state;
-    if (field[idx] !== '') return;
+    const { state } = this;
+    if (state.field[idx] !== '') return;
     this.setState({
-      field: update(field, { [idx]: { $set: activePlayer === 'first' ? 'x' : 'o' } }) ,
-      activePlayer: activePlayer === 'first' ? 'second' : 'first',
+      field: update(state.field, { [idx]: { $set: state.activePlayer === 'first' ? 'x' : 'o' } }) ,
+      activePlayer: state.activePlayer === 'first' ? 'second' : 'first',
     });
   };
 
   render() {
-    const { field, activePlayer } = this.state;
-    const { N } = this.props;
+    const { props, state } = this;
     return (
       <div className={styles.root}>
-        <div className={styles.header}>Ход игрока №{activePlayer === 'first' ? 1 : 2}</div>
+        <div className={styles.header}>Ход игрока №{state.activePlayer === 'first' ? 1 : 2}</div>
         <div
           className={styles.field}
           style={{
-            width: `${N * 50}px`,
-            height: `${N * 50}px`,
+            width: `${props.N * 50}px`,
+            height: `${props.N * 50}px`,
           }}
           >
-          {field.map((v, idx) => (
+          {state.field.map((v, idx) => (
             <span
               key={idx}
               className={classNames(
                 styles.cell,
-                field[idx] !== '' ? styles.dirty : '',
-                idx % N === 0 ? styles.firstColumn : '' ,
-                idx < N ? styles.firstRow : '',
+                state.field[idx] !== '' ? styles.dirty : '',
+                idx % props.N === 0 ? styles.firstColumn : '' ,
+                idx < props.N ? styles.firstRow : '',
               )}
               onClick={() => this.handleCellClick(idx)}
               >

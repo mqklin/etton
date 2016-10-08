@@ -1,19 +1,20 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import styles from './styles.scss';
 import classNames from 'classnames';
 
+type Props = {
+  top: 1 | 2,
+  children: React$Element<*>,
+};
+
 class Indent extends Component {
-  static propTypes = {
-    top: PropTypes.oneOf([1, 2]),
-    children: PropTypes.node.isRequired,
-  };
-  static defaultProps = {};
+  props: Props;
 
   render() {
-    const { top } = this.props;
+    const { props } = this;
     return (
-      <div className={classNames(styles.root, styles[`top-${top}`])}>
-        {this.props.children}
+      <div className={classNames(styles.root, styles[`top-${props.top}`])}>
+        {props.children}
       </div>
     );
   }
