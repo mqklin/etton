@@ -123,7 +123,6 @@ function getWinChainFromCell(activePlayer: 'x' | 'o', cellIdx: number, field: ['
         return chain;
       }
     }
-
   }
   return null;
 }
