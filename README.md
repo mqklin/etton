@@ -3,3 +3,5 @@
 Запуск: `npm i && npm start`
 
 Сервер запускается на `localhost:3000`
+
+Готовая сборка: `npm run build` (результат в папке build)

@@ -6,7 +6,8 @@
     "flow-typed-install": "flow-typed install",
     "start": "node dev-server.js & npm-watch ",
     "flow": "flow check --all",
-    "watch": "npm-watch"
+    "watch": "npm-watch",
+    "build": "NODE_ENV=production webpack --config webpack-config/index"
   },
   "dependencies": {
     "autoprefixer": "^6.3.7",
