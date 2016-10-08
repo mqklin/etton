@@ -37,6 +37,11 @@ class App extends Component {
     this.setState(newState);
   };
 
+  closeGame = () => {
+    localStorage.removeItem('game');
+    this.setState({ game: null });
+  };
+
   render() {
     const { state } = this;
     return (
@@ -47,7 +52,7 @@ class App extends Component {
             />
           : <ActiveGame
               game={state.game}
-              onGameClose={() => this.setState({ game: null })}
+              onGameClose={this.closeGame}
             />
         }
       </div>
