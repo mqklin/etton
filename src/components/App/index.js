@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import styles from './styles.scss';
-import { Input } from 'components';
-import NoGame from './NoGame';
-import ActiveGame from './ActiveGame';
+import { ActiveGame, NoGame } from 'components';
 
 type State = {
   game: {
