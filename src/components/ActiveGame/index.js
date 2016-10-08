@@ -10,7 +10,7 @@ type Props = {
   onGameClose: () => void,
 };
 type State = {
-  winner: 'none' | 'first' | 'second',
+  winner: 'none' | 'x' | 'o',
 };
 
 class ActiveGame extends Component {
@@ -19,7 +19,7 @@ class ActiveGame extends Component {
     winner: 'none',
   };
 
-  onGameEnd = (winner: 'first' | 'second') => {
+  onGameEnd = (winner: 'x' | 'o') => {
     this.setState({ winner });
   };
 
@@ -39,7 +39,7 @@ class ActiveGame extends Component {
             key="header"
             children={(
               <div className={styles.result}>
-                Победил игрок №{}
+                Победил игрок {state.winner}
               </div>
             )}
           />,

@@ -5,6 +5,7 @@
   .field {
     display: flex;
     flex-flow: row wrap;
+    user-select: none;
     .cell {
       display: flex;
       justify-content: center;
@@ -25,10 +26,11 @@
       &.firstRow {
         border-top: 1px solid black;
       }
-      &.win {
-      }
-      &.lose {
-        font-size: 15px;
+      &.win, &.lose {
+        cursor: default;
+        &.lose {
+          font-size: 15px;
+        }
       }
     }
   }

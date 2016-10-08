@@ -5,15 +5,13 @@ import update from 'react-addons-update';
 
 type Props = {
   N: number,
-  onGameEnd: (winner: 'first' | 'second') => void,
+  onGameEnd: (winner: 'x' | 'o') => void,
 };
 
 type State = {
   field: ['' | 'x' | 'o'],
-  activePlayer: 'first' | 'second',
-  xChains?: [[number]],
-  oChains?: [[number]],
-  winChain?: [number],
+  activePlayer: 'x' | 'o',
+  winChain?: ?[number],
 };
 
 class Field extends Component {
@@ -23,28 +21,29 @@ class Field extends Component {
     super(props);
     this.state = {
       field: Array(props.N * props.N).fill(''),
-      activePlayer: 'first',
+      activePlayer: 'x',
     };
   }
 
   handleCellClick = (idx: number): void => {
     const { props, state } = this;
-    if (state.field[idx] !== '') return;
-    const activeChains = state.activePlayer === 'first' ? 'xChains' : 'oChains';
-    const newChains = updateChains(idx, state[activeChains], props.N);
+    if (state.field[idx] !== '' || state.winChain) return;
+    const winChain = getWinChainFromCell(state.activePlayer, idx, state.field, props.N);
     this.setState({
-      field: update(state.field, { [idx]: { $set: state.activePlayer === 'first' ? 'x' : 'o' } }) ,
-      activePlayer: state.activePlayer === 'first' ? 'second' : 'first',
-      [activeChains]: newChains,
-      winChain: newChains.find(c => c.length === 5),
+      field: update(state.field, { [idx]: { $set: state.activePlayer } }) ,
+      activePlayer: state.activePlayer === 'x' ? 'o' : 'x',
+      winChain,
     });
+    if (winChain) {
+      props.onGameEnd(state.activePlayer);
+    }
   };
 
   render() {
     const { props, state } = this;
     return (
       <div className={styles.root}>
-        <div className={styles.header}>Ход игрока №{state.activePlayer === 'first' ? 1 : 2}</div>
+        {!state.winChain && <div className={styles.header}>Ход игрока {state.activePlayer}</div>}
         <div
           className={styles.field}
           style={{
@@ -74,26 +73,27 @@ class Field extends Component {
 }
 export default Field;
 
-
-function cellHasNeighbourInThisChain(cellIdx: number, chain: [number], N: number) {
-  const cellNeighbours = [
-    cellIdx - N - 1, // lt
-    cellIdx - N, // t
-    cellIdx - N + 1, // tr
-    cellIdx + 1, // r
-    cellIdx + N + 1, // br
-    cellIdx + N, // b
-    cellIdx + N - 1, // bl
-    cellIdx - 1 // l
+function getWinChainFromCell(activePlayer: 'x' | 'o', cellIdx: number, field: ['' | 'x' | 'o'], N: number): ?[number] {
+  const getNextCellIdx = [
+    i => i - N - 1, // lt
+    i => i - N, // t
+    i => i - N + 1, // rt
+    i => i + 1, // r
+    i => i + N + 1, // br
+    i => i + N, // b
+    i => i + N - 1, // bl
+    i => i - 1 // l
   ];
-  return chain.some((idx1: number) => cellNeighbours.some((idx2: number) => idx1 === idx2));
-};
-function updateChains(cellIdx: number, chains?: [[number]], N: number): [[number]] {
-  const chainIdx = (chains || []).findIndex((chain: [number]) => cellHasNeighbourInThisChain(cellIdx, chain, N));
-  return update(
-    chains || [],
-    chainIdx === -1
-      ? { $push: [[cellIdx]] }
-      : { [chainIdx]: { $push: [cellIdx] } }
-  );
+  for (const f of getNextCellIdx) {
+    let i = cellIdx;
+    const chain = [i];
+    while (field[i = f(i)] === activePlayer) {
+      chain.push(i);
+      if (chain.length === 5) {
+        return chain;
+      }
+    }
+
+  }
+  return null;
 }
