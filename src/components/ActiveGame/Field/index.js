@@ -11,8 +11,9 @@ type Props = {
 type State = {
   field: ['' | 'x' | 'o'],
   activePlayer: 'first' | 'second',
-  xChains: [[number]],
-  oChains: [[number]],
+  xChains?: [[number]],
+  oChains?: [[number]],
+  winChain?: [number],
 };
 
 class Field extends Component {
@@ -23,8 +24,6 @@ class Field extends Component {
     this.state = {
       field: Array(props.N * props.N).fill(''),
       activePlayer: 'first',
-      xChains: [[Infinity]],
-      oChains: [[Infinity]],
     };
   }
 
@@ -32,10 +31,12 @@ class Field extends Component {
     const { props, state } = this;
     if (state.field[idx] !== '') return;
     const activeChains = state.activePlayer === 'first' ? 'xChains' : 'oChains';
+    const newChains = updateChains(idx, state[activeChains], props.N);
     this.setState({
       field: update(state.field, { [idx]: { $set: state.activePlayer === 'first' ? 'x' : 'o' } }) ,
       activePlayer: state.activePlayer === 'first' ? 'second' : 'first',
-      [activeChains]: updateChains(idx, state[activeChains], props.N),
+      [activeChains]: newChains,
+      winChain: newChains.find(c => c.length === 5),
     });
   };
 
@@ -86,8 +87,8 @@ function cellHasNeighbourInThisChain(cellIdx: number, chain: [number], N: number
   ];
   return chain.some((idx1: number) => cellNeighbours.some((idx2: number) => idx1 === idx2));
 };
-function updateChains(cellIdx: number, chains: [[number]], N: number): [[number]] {
-  const chainIdx = chains.findIndex((chain: [number]) => cellHasNeighbourInThisChain(cellIdx, chain, N));
+function updateChains(cellIdx: number, chains?: [[number]], N: number): [[number]] {
+  const chainIdx = (chains || []).findIndex((chain: [number]) => cellHasNeighbourInThisChain(cellIdx, chain, N));
   return update(
     chains,
     chainIdx === -1
