@@ -60,6 +60,7 @@ class Field extends Component {
                 state.field[idx] !== '' ? styles.dirty : '',
                 idx % props.N === 0 ? styles.firstColumn : '' ,
                 idx < props.N ? styles.firstRow : '',
+                state.winChain ? (state.winChain.includes(idx) ? styles.win : styles.lose) : ''
               )}
               onClick={() => this.handleCellClick(idx)}
               >
@@ -90,7 +91,7 @@ function cellHasNeighbourInThisChain(cellIdx: number, chain: [number], N: number
 function updateChains(cellIdx: number, chains?: [[number]], N: number): [[number]] {
   const chainIdx = (chains || []).findIndex((chain: [number]) => cellHasNeighbourInThisChain(cellIdx, chain, N));
   return update(
-    chains,
+    chains || [],
     chainIdx === -1
       ? { $push: [[cellIdx]] }
       : { [chainIdx]: { $push: [cellIdx] } }
